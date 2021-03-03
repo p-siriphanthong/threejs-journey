@@ -19,6 +19,38 @@ const metalnessTexture = textureLoader.load('/textures/door/metalness.jpg')
 const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
 
 /**
+ * Transforming Textures
+ */
+// Repeat
+const repeatTexture = textureLoader.load('/textures/door/color.jpg')
+repeatTexture.repeat.x = 2
+repeatTexture.repeat.y = 3
+repeatTexture.wrapS = THREE.RepeatWrapping // is for the `x` axis
+repeatTexture.wrapT = THREE.RepeatWrapping // is for the `y` axis
+
+// Mirrored Repeat
+const mirroredRepeatTexture = textureLoader.load('/textures/door/color.jpg')
+mirroredRepeatTexture.repeat.x = 2
+mirroredRepeatTexture.repeat.y = 3
+mirroredRepeatTexture.wrapS = THREE.MirroredRepeatWrapping // is for the `x` axis
+mirroredRepeatTexture.wrapT = THREE.MirroredRepeatWrapping // is for the `y` axis
+
+// Offset
+const offsetTexture = textureLoader.load('/textures/door/color.jpg')
+offsetTexture.repeat.x = 2
+offsetTexture.repeat.y = 3
+offsetTexture.wrapS = THREE.MirroredRepeatWrapping // is for the `x` axis
+offsetTexture.wrapT = THREE.MirroredRepeatWrapping // is for the `y` axis
+offsetTexture.offset.x = 0.5
+offsetTexture.offset.y = 0.5
+
+// Rotation
+const rotationTexture = textureLoader.load('/textures/door/color.jpg')
+rotationTexture.rotation = Math.PI * 0.25
+rotationTexture.center.x = 0.5
+rotationTexture.center.y = 0.5
+
+/**
  * Base
  */
 // Canvas
@@ -71,6 +103,30 @@ generateExerciseModes(
       name: 'Roughness Texture',
       handler: () => {
         texture = roughnessTexture
+      },
+    },
+    {
+      name: 'Repeat Texture',
+      handler: () => {
+        texture = repeatTexture
+      },
+    },
+    {
+      name: 'Mirrored Repeat Texture',
+      handler: () => {
+        texture = mirroredRepeatTexture
+      },
+    },
+    {
+      name: 'Offset Texture',
+      handler: () => {
+        texture = offsetTexture
+      },
+    },
+    {
+      name: 'Rotation Texture',
+      handler: () => {
+        texture = rotationTexture
       },
     },
   ],
