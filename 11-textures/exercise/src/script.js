@@ -1,13 +1,22 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { generateExerciseModes } from '../../../utils'
 
 /**
  * Textures
  */
 const loadingManager = new THREE.LoadingManager()
 const textureLoader = new THREE.TextureLoader(loadingManager)
-const texture = textureLoader.load('/textures/door/color.jpg')
+const colorTexture = textureLoader.load('/textures/door/color.jpg')
+const alphaTexture = textureLoader.load('/textures/door/alpha.jpg')
+const heightTexture = textureLoader.load('/textures/door/height.jpg')
+const normalTexture = textureLoader.load('/textures/door/normal.jpg')
+const ambientOcclusionTexture = textureLoader.load(
+  '/textures/door/ambientOcclusion.jpg'
+)
+const metalnessTexture = textureLoader.load('/textures/door/metalness.jpg')
+const roughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
 
 /**
  * Base
@@ -18,13 +27,68 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-/**
- * Object
- */
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ map: texture })
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
+// Exercise modes
+let texture = null
+generateExerciseModes(
+  [
+    {
+      name: 'Color Texture',
+      handler: () => {
+        texture = colorTexture
+      },
+    },
+    {
+      name: 'Alpha Texture',
+      handler: () => {
+        texture = alphaTexture
+      },
+    },
+    {
+      name: 'Height Texture',
+      handler: () => {
+        texture = heightTexture
+      },
+    },
+    {
+      name: 'Normal Texture',
+      handler: () => {
+        texture = normalTexture
+      },
+    },
+    {
+      name: 'Ambient Occlusion Texture',
+      handler: () => {
+        texture = ambientOcclusionTexture
+      },
+    },
+    {
+      name: 'Metalness Texture',
+      handler: () => {
+        texture = metalnessTexture
+      },
+    },
+    {
+      name: 'Roughness Texture',
+      handler: () => {
+        texture = roughnessTexture
+      },
+    },
+  ],
+  {
+    before: () => {
+      scene.clear()
+    },
+    after: () => {
+      /**
+       * Object
+       */
+      const geometry = new THREE.BoxGeometry(1, 1, 1)
+      const material = new THREE.MeshBasicMaterial({ map: texture })
+      const mesh = new THREE.Mesh(geometry, material)
+      scene.add(mesh)
+    },
+  }
+)
 
 /**
  * Sizes
