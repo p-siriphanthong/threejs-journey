@@ -21,6 +21,15 @@ const scene = new THREE.Scene()
 const textureLoader = new THREE.TextureLoader()
 
 /**
+ * Fonts
+ */
+const fontLoader = new THREE.FontLoader()
+
+fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
+  console.log('loaded', font)
+})
+
+/**
  * Object
  */
 const cube = new THREE.Mesh(
