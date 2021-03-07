@@ -15,6 +15,10 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+// Axes helper
+const axesHelper = new THREE.AxisHelper()
+scene.add(axesHelper)
+
 /**
  * Textures
  */
@@ -37,11 +41,23 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
     bevelOffset: 0,
     bevelSegments: 5,
   })
+
+  // By default, Three.js is using sphere bounding => change to box bounding
+  textGeometry.computeBoundingBox()
+
+  // Center the text by translate function
+  // textGeometry.translate(
+  //   -(textGeometry.boundingBox.max.x - 0.02) * 0.5, // Subtract bevel size
+  //   -(textGeometry.boundingBox.max.y - 0.02) * 0.5, // Subtract bevel size
+  //   -(textGeometry.boundingBox.max.z - 0.03) * 0.5 // Subtract bevel thickness
+  // )
+
+  // Center the text by center function
+  textGeometry.center()
+
   const textMaterial = new THREE.MeshBasicMaterial({ wireframe: true })
   const text = new THREE.Mesh(textGeometry, textMaterial)
   scene.add(text)
-
-  textGeometry.computeBoundingBox()
 })
 
 /**
