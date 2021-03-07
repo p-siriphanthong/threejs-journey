@@ -1,6 +1,7 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { generateExerciseModes } from '../../../utils'
 
 /**
  * Textures
@@ -38,20 +39,81 @@ const sizes = {
 /**
  * Objects
  */
-const material = new THREE.MeshBasicMaterial({ map: doorColorTexture })
-
-const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16), material)
+const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16))
 sphere.position.x = -1.5
 
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), material)
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1))
 
-const torus = new THREE.Mesh(
-  new THREE.TorusGeometry(0.3, 0.2, 16, 32),
-  material
-)
+const torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 16, 32))
 torus.position.x = 1.5
 
 scene.add(sphere, plane, torus)
+
+// Exercise modes
+let material = null
+generateExerciseModes(
+  [
+    {
+      name: 'MeshBasicMaterial (map)',
+      handler: () => {
+        material = new THREE.MeshBasicMaterial()
+        material.map = doorColorTexture
+      },
+    },
+    {
+      name: 'MeshBasicMaterial (color)',
+      handler: () => {
+        material = new THREE.MeshBasicMaterial()
+        material.color = new THREE.Color('#ff0000')
+      },
+    },
+    {
+      name: 'MeshBasicMaterial (map & color)',
+      handler: () => {
+        material = new THREE.MeshBasicMaterial()
+        material.map = doorColorTexture
+        material.color = new THREE.Color('#ff0000')
+      },
+    },
+    {
+      name: 'MeshBasicMaterial (wireframe)',
+      handler: () => {
+        material = new THREE.MeshBasicMaterial()
+        material.wireframe = true
+      },
+    },
+    {
+      name: 'MeshBasicMaterial (opacity)',
+      handler: () => {
+        material = new THREE.MeshBasicMaterial()
+        material.transparent = true
+        material.opacity = 0.5
+      },
+    },
+    {
+      name: 'MeshBasicMaterial (alphaMap)',
+      handler: () => {
+        material = new THREE.MeshBasicMaterial()
+        material.transparent = true
+        material.alphaMap = doorAlphaTexture
+      },
+    },
+    {
+      name: 'MeshBasicMaterial (side)',
+      handler: () => {
+        material = new THREE.MeshBasicMaterial()
+        material.side = THREE.DoubleSide
+      },
+    },
+  ],
+  {
+    after: () => {
+      sphere.material = material
+      plane.material = material
+      torus.material = material
+    },
+  }
+)
 
 window.addEventListener('resize', () => {
   // Update sizes
