@@ -23,6 +23,7 @@ scene.add(axesHelper)
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
+const matcapTexture = textureLoader.load('/textures/matcaps/1.png') // posible file numbers are 1-8
 
 /**
  * Fonts
@@ -55,7 +56,7 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json', font => {
   // Center the text by center function
   textGeometry.center()
 
-  const textMaterial = new THREE.MeshBasicMaterial({ wireframe: true })
+  const textMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture })
   const text = new THREE.Mesh(textGeometry, textMaterial)
   scene.add(text)
 })
