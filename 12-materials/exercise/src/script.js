@@ -1,5 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
+import * as dat from 'dat.gui'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { generateExerciseModes } from '../../../utils'
 
@@ -48,21 +49,8 @@ pointLight.position.y = 3
 pointLight.position.z = 4
 scene.add(pointLight)
 
-/**
- * Objects
- */
-const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16))
-sphere.position.x = -1.5
-
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1))
-
-const torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 16, 32))
-torus.position.x = 1.5
-
-scene.add(sphere, plane, torus)
-
 // Exercise modes
-let material = null
+let material, gui, sphere, plane, torus
 generateExerciseModes(
   [
     {
@@ -186,12 +174,217 @@ generateExerciseModes(
         gradientTexture.generateMipmaps = false
       },
     },
+    {
+      name: 'MeshStandardMaterial',
+      handler: () => {
+        material = new THREE.MeshStandardMaterial()
+      },
+    },
+    {
+      name: 'MeshStandardMaterial (metalness & roughness)',
+      handler: () => {
+        material = new THREE.MeshStandardMaterial()
+        material.map = doorColorTexture
+        material.metalness = 0.45
+        material.roughness = 0.65
+
+        gui.add(material, 'metalness').min(0).max(1).step(0.0001)
+        gui.add(material, 'roughness').min(0).max(1).step(0.0001)
+      },
+    },
+    {
+      name: 'MeshStandardMaterial (aoMap)',
+      handler: () => {
+        sphere.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2)
+        )
+        plane.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2)
+        )
+        torus.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2)
+        )
+
+        material = new THREE.MeshStandardMaterial()
+        material.map = doorColorTexture
+        material.aoMap = doorAmbientOcclusionTexture
+        material.aoMapIntensity = 1
+
+        gui.add(material, 'aoMapIntensity').min(0).max(10).step(0.0001)
+      },
+    },
+    {
+      name: 'MeshStandardMaterial (displacementMap)',
+      handler: () => {
+        sphere.geometry = new THREE.SphereGeometry(0.5, 64, 64)
+        plane.geometry = new THREE.PlaneGeometry(1, 1, 100, 100)
+        torus.geometry = new THREE.TorusGeometry(0.3, 0.2, 64, 128)
+
+        sphere.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2)
+        )
+        plane.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2)
+        )
+        torus.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2)
+        )
+
+        material = new THREE.MeshStandardMaterial()
+        material.map = doorColorTexture
+        material.aoMap = doorAmbientOcclusionTexture
+        material.aoMapIntensity = 1
+        material.displacementMap = doorHeightTexture
+        material.displacementScale = 0.05
+
+        gui.add(material, 'aoMapIntensity').min(0).max(10).step(0.0001)
+        gui.add(material, 'displacementScale').min(0).max(1).step(0.0001)
+      },
+    },
+    {
+      name: 'MeshStandardMaterial (metalnessMap & roughnessMap)',
+      handler: () => {
+        sphere.geometry = new THREE.SphereGeometry(0.5, 64, 64)
+        plane.geometry = new THREE.PlaneGeometry(1, 1, 100, 100)
+        torus.geometry = new THREE.TorusGeometry(0.3, 0.2, 64, 128)
+
+        sphere.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2)
+        )
+        plane.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2)
+        )
+        torus.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2)
+        )
+
+        material = new THREE.MeshStandardMaterial()
+        material.map = doorColorTexture
+        material.aoMap = doorAmbientOcclusionTexture
+        material.aoMapIntensity = 1
+        material.displacementMap = doorHeightTexture
+        material.displacementScale = 0.05
+        material.metalnessMap = doorMetalnessTexture
+        material.roughnessMap = doorRoughnessTexture
+        material.metalness = 0
+        material.roughness = 1
+
+        gui.add(material, 'metalness').min(0).max(1).step(0.0001)
+        gui.add(material, 'roughness').min(0).max(1).step(0.0001)
+      },
+    },
+    {
+      name: 'MeshStandardMaterial (normalMap)',
+      handler: () => {
+        sphere.geometry = new THREE.SphereGeometry(0.5, 64, 64)
+        plane.geometry = new THREE.PlaneGeometry(1, 1, 100, 100)
+        torus.geometry = new THREE.TorusGeometry(0.3, 0.2, 64, 128)
+
+        sphere.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2)
+        )
+        plane.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2)
+        )
+        torus.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2)
+        )
+
+        material = new THREE.MeshStandardMaterial()
+        material.map = doorColorTexture
+        material.aoMap = doorAmbientOcclusionTexture
+        material.aoMapIntensity = 1
+        material.displacementMap = doorHeightTexture
+        material.displacementScale = 0.05
+        material.metalnessMap = doorMetalnessTexture
+        material.roughnessMap = doorRoughnessTexture
+        material.metalness = 0
+        material.roughness = 1
+        material.normalMap = doorNormalTexture
+        material.normalScale.set(0.5, 0.5)
+
+        gui.add(material.normalScale, 'x').min(0).max(1).step(0.0001)
+        gui.add(material.normalScale, 'y').min(0).max(1).step(0.0001)
+      },
+    },
+    {
+      name: 'MeshStandardMaterial (alphaMap)',
+      handler: () => {
+        sphere.geometry = new THREE.SphereGeometry(0.5, 64, 64)
+        plane.geometry = new THREE.PlaneGeometry(1, 1, 100, 100)
+        torus.geometry = new THREE.TorusGeometry(0.3, 0.2, 64, 128)
+
+        sphere.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(sphere.geometry.attributes.uv.array, 2)
+        )
+        plane.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2)
+        )
+        torus.geometry.setAttribute(
+          'uv2',
+          new THREE.BufferAttribute(torus.geometry.attributes.uv.array, 2)
+        )
+
+        material = new THREE.MeshStandardMaterial()
+        material.map = doorColorTexture
+        material.aoMap = doorAmbientOcclusionTexture
+        material.aoMapIntensity = 1
+        material.displacementMap = doorHeightTexture
+        material.displacementScale = 0.05
+        material.metalnessMap = doorMetalnessTexture
+        material.roughnessMap = doorRoughnessTexture
+        material.metalness = 0
+        material.roughness = 1
+        material.normalMap = doorNormalTexture
+        material.normalScale.set(0.5, 0.5)
+        material.transparent = true
+        material.alphaMap = doorAlphaTexture
+      },
+    },
   ],
   {
+    before: () => {
+      /**
+       * Debug
+       */
+      gui?.destroy()
+      gui = new dat.GUI()
+
+      /**
+       * Objects
+       */
+      if (sphere) scene.remove(sphere)
+      if (plane) scene.remove(plane)
+      if (torus) scene.remove(torus)
+
+      sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 16, 16))
+      sphere.position.x = -1.5
+
+      plane = new THREE.Mesh(new THREE.PlaneGeometry(1, 1))
+
+      torus = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.2, 16, 32))
+      torus.position.x = 1.5
+    },
     after: () => {
       sphere.material = material
       plane.material = material
       torus.material = material
+
+      scene.add(sphere, plane, torus)
     },
   }
 )
