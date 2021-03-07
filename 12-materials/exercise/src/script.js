@@ -132,6 +132,12 @@ generateExerciseModes(
         material.matcap = matcapTexture
       },
     },
+    {
+      name: 'MeshDepthMaterial',
+      handler: () => {
+        material = new THREE.MeshDepthMaterial()
+      },
+    },
   ],
   {
     after: () => {
