@@ -8,6 +8,8 @@ import { generateExerciseModes } from '../../../utils'
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
+const cubeTextureLoader = new THREE.CubeTextureLoader()
+
 const doorColorTexture = textureLoader.load('/textures/door/color.jpg')
 const doorAlphaTexture = textureLoader.load('/textures/door/alpha.jpg')
 const doorAmbientOcclusionTexture = textureLoader.load(
@@ -17,8 +19,19 @@ const doorHeightTexture = textureLoader.load('/textures/door/height.jpg')
 const doorNormalTexture = textureLoader.load('/textures/door/normal.jpg')
 const doorMetalnessTexture = textureLoader.load('/textures/door/metalness.jpg')
 const doorRoughnessTexture = textureLoader.load('/textures/door/roughness.jpg')
-const matcapTexture = textureLoader.load('/textures/matcaps/1.png')
-const gradientTexture = textureLoader.load('/textures/gradients/3.jpg')
+
+const matcapTexture = textureLoader.load('/textures/matcaps/1.png') // posible file numbers are 1-8
+const gradientTexture = textureLoader.load('/textures/gradients/3.jpg') // posible file numbers are 3 and 5
+
+const environmentMapNumber = 0 // position numbers are 0-3
+const environmentMapTexture = cubeTextureLoader.load([
+  `/textures/environmentMaps/${environmentMapNumber}/px.jpg`,
+  `/textures/environmentMaps/${environmentMapNumber}/nx.jpg`,
+  `/textures/environmentMaps/${environmentMapNumber}/py.jpg`,
+  `/textures/environmentMaps/${environmentMapNumber}/ny.jpg`,
+  `/textures/environmentMaps/${environmentMapNumber}/pz.jpg`,
+  `/textures/environmentMaps/${environmentMapNumber}/nz.jpg`,
+])
 
 /**
  * Base
@@ -353,6 +366,18 @@ generateExerciseModes(
         material.normalScale.set(0.5, 0.5)
         material.transparent = true
         material.alphaMap = doorAlphaTexture
+      },
+    },
+    {
+      name: 'Environment map',
+      handler: () => {
+        material = new THREE.MeshStandardMaterial()
+        material.metalness = 0.7
+        material.roughness = 0.2
+        material.envMap = environmentMapTexture
+
+        gui.add(material, 'metalness').min(0).max(1).step(0.0001)
+        gui.add(material, 'roughness').min(0).max(1).step(0.0001)
       },
     },
   ],
