@@ -150,6 +150,12 @@ generateExerciseModes(
         material = new THREE.MeshDepthMaterial()
       },
     },
+    {
+      name: 'MeshLambertMaterial',
+      handler: () => {
+        material = new THREE.MeshLambertMaterial()
+      },
+    },
   ],
   {
     after: () => {
