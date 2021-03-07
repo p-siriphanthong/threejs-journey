@@ -170,6 +170,22 @@ generateExerciseModes(
         material.specular = new THREE.Color(0x1188ff)
       },
     },
+    {
+      name: 'MeshToonMaterial',
+      handler: () => {
+        material = new THREE.MeshToonMaterial()
+      },
+    },
+    {
+      name: 'MeshToonMaterial (gradientMap)',
+      handler: () => {
+        material = new THREE.MeshToonMaterial()
+        material.gradientMap = gradientTexture
+        gradientTexture.minFilter = THREE.NearestFilter
+        gradientTexture.magFilter = THREE.NearestFilter
+        gradientTexture.generateMipmaps = false
+      },
+    },
   ],
   {
     after: () => {
