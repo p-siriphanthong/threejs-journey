@@ -105,6 +105,26 @@ generateExerciseModes(
         material.side = THREE.DoubleSide
       },
     },
+    {
+      name: 'MeshNormalMaterial',
+      handler: () => {
+        material = new THREE.MeshNormalMaterial()
+      },
+    },
+    {
+      name: 'MeshNormalMaterial (wireframe)',
+      handler: () => {
+        material = new THREE.MeshNormalMaterial()
+        material.wireframe = true
+      },
+    },
+    {
+      name: 'MeshNormalMaterial (flatShading)',
+      handler: () => {
+        material = new THREE.MeshNormalMaterial()
+        material.flatShading = true
+      },
+    },
   ],
   {
     after: () => {
