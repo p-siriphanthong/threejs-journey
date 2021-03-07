@@ -18,6 +18,8 @@ export const generateExerciseModes = (
   wrapper.style.width = '100%'
   wrapper.style.padding = '5px'
   wrapper.style.zIndex = 1
+  wrapper.style.whiteSpace = 'nowrap'
+  wrapper.style.overflowX = 'auto'
 
   modes.forEach(mode => {
     const button = document.createElement('button')
