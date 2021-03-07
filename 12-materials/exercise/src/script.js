@@ -156,6 +156,20 @@ generateExerciseModes(
         material = new THREE.MeshLambertMaterial()
       },
     },
+    {
+      name: 'MeshPhongMaterial',
+      handler: () => {
+        material = new THREE.MeshPhongMaterial()
+      },
+    },
+    {
+      name: 'MeshPhongMaterial (shininess & specular)',
+      handler: () => {
+        material = new THREE.MeshPhongMaterial()
+        material.shininess = 100
+        material.specular = new THREE.Color(0x1188ff)
+      },
+    },
   ],
   {
     after: () => {
