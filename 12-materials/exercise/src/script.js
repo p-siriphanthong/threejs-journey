@@ -125,6 +125,13 @@ generateExerciseModes(
         material.flatShading = true
       },
     },
+    {
+      name: 'MeshMatcapMaterial',
+      handler: () => {
+        material = new THREE.MeshMatcapMaterial()
+        material.matcap = matcapTexture
+      },
+    },
   ],
   {
     after: () => {
