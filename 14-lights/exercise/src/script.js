@@ -1,6 +1,7 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js'
 import * as dat from 'dat.gui'
 
 /**
@@ -128,6 +129,44 @@ gui
   .step(0.001)
   .name('SpotLight: penumbra')
 gui.add(spotLight, 'decay').min(0).max(10).step(0.001).name('SpotLight: decay')
+
+/**
+ * LightHelpers
+ */
+// HemisphereLight
+const hemisphereLightHelper = new THREE.HemisphereLightHelper(
+  hemisphereLight,
+  0.2
+)
+scene.add(hemisphereLightHelper)
+
+// DirectionalLight
+const directionalLightHelper = new THREE.DirectionalLightHelper(
+  directionalLight,
+  0.2
+)
+scene.add(directionalLightHelper)
+
+// PointLight
+const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2)
+scene.add(pointLightHelper)
+
+// SpotLight
+const spotLightHelper = new THREE.SpotLightHelper(spotLight)
+scene.add(spotLightHelper)
+window.requestAnimationFrame(() => {
+  spotLightHelper.update() // should call after moving the target
+})
+
+// RectAreaLight
+const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight)
+scene.add(rectAreaLightHelper)
+window.requestAnimationFrame(() => {
+  // should call after update `position` or `rotation`
+  rectAreaLightHelper.position.copy(rectAreaLight.position)
+  rectAreaLightHelper.quaternion.copy(rectAreaLight.quaternion)
+  rectAreaLightHelper.update()
+})
 
 /**
  * Objects
