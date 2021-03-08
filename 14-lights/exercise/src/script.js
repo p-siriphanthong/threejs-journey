@@ -8,6 +8,7 @@ import * as dat from 'dat.gui'
  */
 // Debug
 const gui = new dat.GUI()
+gui.width = 500
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -26,7 +27,7 @@ gui
   .min(0)
   .max(1)
   .step(0.001)
-  .name('AmbientLight')
+  .name('AmbientLight: intensity')
 
 // DirectionalLight
 const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3)
@@ -37,7 +38,7 @@ gui
   .min(0)
   .max(1)
   .step(0.001)
-  .name('DirectionalLight')
+  .name('DirectionalLight: intensity')
 
 // HemisphereLight
 const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.3)
@@ -47,7 +48,30 @@ gui
   .min(0)
   .max(1)
   .step(0.001)
-  .name('HemisphereLight')
+  .name('HemisphereLight: intensity')
+
+// PointLight
+const pointLight = new THREE.PointLight(0xff9000, 0.5, 10, 2)
+pointLight.position.set(1, -0.5, 1)
+scene.add(pointLight)
+gui
+  .add(pointLight, 'intensity')
+  .min(0)
+  .max(1)
+  .step(0.001)
+  .name('PointLight: intensity')
+gui
+  .add(pointLight, 'distance')
+  .min(0)
+  .max(20)
+  .step(0.001)
+  .name('PointLight: distance')
+gui
+  .add(pointLight, 'decay')
+  .min(0)
+  .max(10)
+  .step(0.001)
+  .name('PointLight: decay')
 
 /**
  * Objects
