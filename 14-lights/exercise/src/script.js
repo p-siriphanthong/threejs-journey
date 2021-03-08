@@ -73,6 +73,30 @@ gui
   .step(0.001)
   .name('PointLight: decay')
 
+// RectAreaLight
+const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 2, 1, 1)
+rectAreaLight.position.set(-1.5, 0, 1.5)
+rectAreaLight.lookAt(new THREE.Vector3())
+scene.add(rectAreaLight)
+gui
+  .add(rectAreaLight, 'intensity')
+  .min(0)
+  .max(10)
+  .step(0.001)
+  .name('RectAreaLight: intensity')
+gui
+  .add(rectAreaLight, 'width')
+  .min(0)
+  .max(10)
+  .step(0.001)
+  .name('RectAreaLight: width')
+gui
+  .add(rectAreaLight, 'height')
+  .min(0)
+  .max(10)
+  .step(0.001)
+  .name('RectAreaLight: height')
+
 /**
  * Objects
  */
