@@ -39,6 +39,16 @@ gui
   .step(0.001)
   .name('DirectionalLight')
 
+// HemisphereLight
+const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.3)
+scene.add(hemisphereLight)
+gui
+  .add(hemisphereLight, 'intensity')
+  .min(0)
+  .max(1)
+  .step(0.001)
+  .name('HemisphereLight')
+
 /**
  * Objects
  */
