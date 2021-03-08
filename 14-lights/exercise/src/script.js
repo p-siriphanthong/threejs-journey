@@ -97,6 +97,38 @@ gui
   .step(0.001)
   .name('RectAreaLight: height')
 
+// SpotLight
+const spotLight = new THREE.SpotLight(0x78ff00, 0.5, 10, Math.PI * 0.1, 0.25, 1)
+spotLight.position.set(0, 2, 3)
+scene.add(spotLight)
+spotLight.target.position.x = -0.75
+scene.add(spotLight.target) // like `lookAt` function
+gui
+  .add(spotLight, 'intensity')
+  .min(0)
+  .max(1)
+  .step(0.001)
+  .name('SpotLight: intensity')
+gui
+  .add(spotLight, 'distance')
+  .min(0)
+  .max(20)
+  .step(0.001)
+  .name('SpotLight: distance')
+gui
+  .add(spotLight, 'angle')
+  .min(0)
+  .max(Math.PI)
+  .step(0.001)
+  .name('SpotLight: angle')
+gui
+  .add(spotLight, 'penumbra')
+  .min(0)
+  .max(1)
+  .step(0.001)
+  .name('SpotLight: penumbra')
+gui.add(spotLight, 'decay').min(0).max(10).step(0.001).name('SpotLight: decay')
+
 /**
  * Objects
  */
